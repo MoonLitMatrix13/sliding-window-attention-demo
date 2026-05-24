@@ -1,44 +1,84 @@
-<div class="swa-wrap">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Sliding Window Attention</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="controls">
+
     <div class="mode-row">
-      <button class="mode-btn active" id="btn-swa">Sliding window</button>
-      <button class="mode-btn" id="btn-full">Full attention</button>
-      <button class="mode-btn" id="btn-play">▶ Auto Play</button>
+      <button class="mode-btn active" id="btn-swa">
+        Sliding window
+      </button>
+
+      <button class="mode-btn" id="btn-full">
+        Full attention
+      </button>
+
+      <button class="mode-btn" id="btn-play">
+        ▶ Auto Play
+      </button>
     </div>
-  
-    <div class="label-row">
-      <span class="ctrl-label">Sequence length</span>
-      <input type="range" min="6" max="20" value="12" step="1" id="sl-seq">
-      <span class="val-badge" id="out-seq">12</span>
+
+    <div class="slider-row">
+      <label>Sequence length</label>
+      <input type="range" min="6" max="20" value="12" id="sl-seq">
+      <span id="out-seq">12</span>
     </div>
-  
-    <div class="label-row">
-      <span class="ctrl-label">Window size</span>
-      <input type="range" min="2" max="10" value="4" step="1" id="sl-win">
-      <span class="val-badge" id="out-win">4</span>
+
+    <div class="slider-row">
+      <label>Window size</label>
+      <input type="range" min="2" max="10" value="4" id="sl-win">
+      <span id="out-win">4</span>
     </div>
-  
-    <div class="label-row">
-      <span class="ctrl-label">Query token</span>
-      <input type="range" min="0" max="11" value="7" step="1" id="sl-q">
-      <span class="val-badge" id="out-q">8</span>
+
+    <div class="slider-row">
+      <label>Query token</label>
+      <input type="range" min="0" max="11" value="7" id="sl-q">
+      <span id="out-q">8</span>
     </div>
-  
-    <canvas id="cvs"></canvas>
-  
-    <div class="stat-row">
-      <div class="stat">
-        <div class="stat-label">Pairs computed</div>
-        <div class="stat-val warn" id="st-pairs">—</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Full attention</div>
-        <div class="stat-val" id="st-full">—</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Memory saved</div>
-        <div class="stat-val good" id="st-save">—</div>
-      </div>
-    </div>
-  
-    <div class="insight" id="insight-text"></div>
+
   </div>
+
+  <div class="canvas-card">
+    <canvas id="cvs"></canvas>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat-card">
+      <div class="stat-label">PAIRS COMPUTED</div>
+      <div class="stat-value orange" id="st-pairs">4</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">FULL ATTENTION</div>
+      <div class="stat-value" id="st-full">144</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">MEMORY SAVED</div>
+      <div class="stat-value green" id="st-save">97%</div>
+    </div>
+
+  </div>
+
+  <div class="insight" id="insight-text">
+    Token 8 attends locally (6–9)
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
