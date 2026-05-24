@@ -10,6 +10,8 @@ const seqEl = document.getElementById("sl-seq");
 const winEl = document.getElementById("sl-win");
 const qEl = document.getElementById("sl-q");
 
+[seqEl, winEl, qEl].forEach((el) => el.addEventListener("input", render));
+
 // ===== BUTTONS =====
 document.getElementById("btn-swa").onclick = () => setMode("swa");
 document.getElementById("btn-full").onclick = () => setMode("full");
@@ -48,6 +50,10 @@ function render() {
   let Q = parseInt(qEl.value);
 
   qEl.max = N - 1;
+  if (Q > N - 1) {
+    Q = N - 1;
+    qEl.value = Q;
+  }
 
   document.getElementById("out-seq").textContent = N;
   document.getElementById("out-win").textContent = W;
@@ -60,9 +66,18 @@ function render() {
 
   const cell = canvas.width / N;
 
-  const half = Math.floor(W / 2);
-  const start = Math.max(0, Q - half);
-  const end = Math.min(N - 1, start + W - 1);
+  const windowSize = Math.min(W, N);
+  let start = Q - Math.floor(windowSize / 2);
+  let end = start + windowSize - 1;
+
+  if (start < 0) {
+    start = 0;
+    end = windowSize - 1;
+  }
+  if (end >= N) {
+    end = N - 1;
+    start = end - windowSize + 1;
+  }
 
   // ===== DRAW TOKENS =====
   for (let i = 0; i < N; i++) {
@@ -77,6 +92,7 @@ function render() {
     ctx.fillRect(x + 2, 80, cell - 4, 40);
 
     ctx.fillStyle = "#e8ecff";
+    ctx.textAlign = "center";
     ctx.fillText(i + 1, x + cell / 2, 105);
   }
 
