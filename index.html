@@ -3,78 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+  <meta name="description" content="Interactive visualization of Sliding Window Attention - an efficient attention mechanism for transformers">
+  
   <title>Sliding Window Attention</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<div class="background-effect"></div>
+
 <div class="container">
 
-  <div class="controls">
+  <header class="header">
+    <div class="header-content">
+      <h1>Sliding Window Attention</h1>
+      <p>Efficient attention for long sequences</p>
+    </div>
+  </header>
 
-    <div class="mode-row">
-      <button class="mode-btn active" id="btn-swa">
-        Sliding window
+  <section class="controls">
+    <div class="mode-selector">
+      <button class="mode-btn active" id="btn-swa" aria-pressed="true">
+        <span class="icon">◆</span>
+        <span>Sliding Window</span>
       </button>
-
-      <button class="mode-btn" id="btn-full">
-        Full attention
+      <button class="mode-btn" id="btn-full" aria-pressed="false">
+        <span class="icon">■</span>
+        <span>Full Attention</span>
       </button>
-
-      <button class="mode-btn" id="btn-play">
-        ▶ Auto Play
+      <button class="mode-btn" id="btn-play" aria-label="Toggle auto-play animation">
+        <span class="icon play-icon">▶</span>
+        <span>Auto Play</span>
       </button>
     </div>
 
-    <div class="slider-row">
-      <label>Sequence length</label>
-      <input type="range" min="6" max="20" value="12" id="sl-seq">
-      <span id="out-seq">12</span>
-    </div>
+    <div class="sliders-grid">
+      <div class="slider-group">
+        <div class="slider-label-row">
+          <label for="sl-seq">Sequence Length</label>
+          <output class="slider-value" id="out-seq">12</output>
+        </div>
+        <input type="range" min="6" max="20" value="12" id="sl-seq" class="slider">
+      </div>
 
-    <div class="slider-row">
-      <label>Window size</label>
-      <input type="range" min="2" max="10" value="4" id="sl-win">
-      <span id="out-win">4</span>
-    </div>
+      <div class="slider-group">
+        <div class="slider-label-row">
+          <label for="sl-win">Window Size</label>
+          <output class="slider-value" id="out-win">4</output>
+        </div>
+        <input type="range" min="2" max="10" value="4" id="sl-win" class="slider">
+      </div>
 
-    <div class="slider-row">
-      <label>Query token</label>
-      <input type="range" min="0" max="11" value="7" id="sl-q">
-      <span id="out-q">8</span>
+      <div class="slider-group">
+        <div class="slider-label-row">
+          <label for="sl-q">Query Token</label>
+          <output class="slider-value" id="out-q">8</output>
+        </div>
+        <input type="range" min="0" max="11" value="7" id="sl-q" class="slider">
+      </div>
     </div>
+  </section>
 
+  <div class="visualization-container">
+    <canvas id="cvs" class="canvas-viz"></canvas>
   </div>
 
-  <div class="canvas-card">
-    <canvas id="cvs"></canvas>
-  </div>
-
-  <div class="stats">
-
-    <div class="stat-card">
-      <div class="stat-label">PAIRS COMPUTED</div>
-      <div class="stat-value orange" id="st-pairs">4</div>
+  <div class="stats-section">
+    <div class="stat-card pairs">
+      <div class="stat-icon">⚡</div>
+      <div class="stat-content">
+        <div class="stat-label">Attention Pairs</div>
+        <div class="stat-value" id="st-pairs">4</div>
+      </div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-label">FULL ATTENTION</div>
-      <div class="stat-value" id="st-full">144</div>
+    <div class="stat-card full">
+      <div class="stat-icon">▦</div>
+      <div class="stat-content">
+        <div class="stat-label">Full Attention</div>
+        <div class="stat-value" id="st-full">144</div>
+      </div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-label">MEMORY SAVED</div>
-      <div class="stat-value green" id="st-save">97%</div>
+    <div class="stat-card saved">
+      <div class="stat-icon">💾</div>
+      <div class="stat-content">
+        <div class="stat-label">Memory Saved</div>
+        <div class="stat-value" id="st-save">97%</div>
+      </div>
     </div>
-
   </div>
 
-  <div class="insight" id="insight-text">
-    Token 8 attends locally (6–9)
+  <div class="insight-box" id="insight-text">
+    <span class="insight-icon">ℹ</span>
+    <span id="insight-content">Token 8 attends locally to positions 6–9</span>
   </div>
+
+  <footer class="footer">
+    <p>Sliding Window Attention enables efficient processing of long sequences in transformer models</p>
+  </footer>
 
 </div>
 
